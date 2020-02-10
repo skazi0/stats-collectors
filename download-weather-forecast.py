@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf8 -*-
 import os
 import sys
@@ -9,14 +9,15 @@ import json
 import pytz
 import tzlocal
 from datetime import datetime, timedelta
-from influxdb import InfluxDBClient
+
+import stats
 
 city_id = 2517
 city_name = u'Wrocław'
 url_template_daily = 'http://data.twojapogoda.pl/forecasts/city/daily/%d/%d' # city_id / page_num[1-3]
 url_template_hourly = 'http://data.twojapogoda.pl/forecasts/city/hourly/%d/%d' # city_id / page_num[1-5]
 
-db = InfluxDBClient('oldstats', 8086, 'root', 'root', 'stats')
+table='weather_forecast'
 
 logging.basicConfig()
 logger = logging.getLogger('forecast')
@@ -69,7 +70,7 @@ def fetch_forecast(url):
             samples.append(sample)
             logger.debug(sample)
 
-  db.write_points(samples)
+    stats.write_points(table, samples)
 
 def avg(numbers):
     return sum(numbers) / len(numbers)
@@ -77,34 +78,29 @@ def avg(numbers):
 def point_to_sample(point, ts):
     local_tz = tzlocal.get_localzone()
     return {
-        'time': int((local_tz.localize(ts) - datetime.utcfromtimestamp(0).replace(tzinfo=pytz.utc)).total_seconds() * 1000000000),
-        'measurement': 'WEATHER_FORECAST',
-        'fields': {
-            'wind_speed': point['wind_speed'],
-            'wind_gusts': point['wind_gusts'],
-            'wind_sign': point['wind_sign'],
-            'temp': point['temp'],
-            'temp_feel': point['temp_feel'],
-            'relhum': point['relhum'],
-            'pressmsl': point['pressmsl'],
-            'precip': float(point['precip'].replace(',','.')),
-            'biomet': point['biomet'],
-            'thermal': point['thermal'],
-            'sign': point['sign'],
-            'sign_desc': point['sign_desc'],
-            # sign_size is '90%' or '20-30%'
-            'cloud_cover': avg(map(int, point['sign_size'].replace('%', '').split('-'))),
-        },
-        'tags': {
-            'city': city_name,
-            'city_id': city_id,
-        }
+        'time': int((local_tz.localize(ts) - datetime.utcfromtimestamp(0).replace(tzinfo=pytz.utc)).total_seconds()),
+        'wind_speed': point['wind_speed'],
+        'wind_gusts': point['wind_gusts'],
+        'wind_sign': point['wind_sign'],
+        'temp': point['temp'],
+        'temp_feel': point['temp_feel'],
+        'relhum': point['relhum'],
+        'pressmsl': point['pressmsl'],
+        'precip': float(point['precip'].replace(',','.')),
+        'biomet': point['biomet'],
+        'thermal': point['thermal'],
+        'sign': point['sign'],
+        'sign_desc': point['sign_desc'],
+        # sign_size is '90%' or '20-30%'
+        'cloud_cover': avg(list(map(int, point['sign_size'].replace('%', '').split('-')))),
+        'city': city_name,
+        'city_id': city_id,
     }
 
 # daily forecasts
-for page in xrange(1, 4):
+for page in range(1, 4):
     fetch_forecast(url_template_daily % (city_id, page))
 
 # hourly forecasts
-for page in xrange(1, 6):
+for page in range(1, 6):
     fetch_forecast(url_template_hourly % (city_id, page))
