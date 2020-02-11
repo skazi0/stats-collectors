@@ -21,6 +21,6 @@ for conf in ['/etc/default/stats-collectors', os.path.join(os.environ['HOME'], '
 
 def write_points(table, samples):
     for point in samples:
-        r = requests.post(stats_url + '?' + table, json=point)
+        r = requests.post(stats_url + '?table=' + table, json=point)
         if r.status_code != 200:
             logger.error('error writing stats')
