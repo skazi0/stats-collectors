@@ -7,11 +7,13 @@ import re
 import requests
 import json
 from datetime import datetime
-from influxdb import InfluxDBClient
+
+import stats
 
 #url = 'https://demo.dacsystem.pl/pobierz-dane-mapy'
 url = 'http://air.wroclaw.pios.gov.pl/pobierz-dane-mapy'
-db = InfluxDBClient('oldstats', 8086, 'root', 'root', 'stats')
+
+table = 'air_quality'
 
 index_values = {
     u'Bardzo dobry': 6.0,
@@ -68,7 +70,7 @@ for station in json['stations']:
     if not station['values']:
         logger.warning('no values for station %s' % meta['name'])
         continue
-    for key, value in station['values'].iteritems():
+    for key, value in station['values'].items():
 #        logger.debug(key)
 #        logger.debug(norms[key])
 #        logger.debug(find_index(value['value'], norms[key]))
@@ -76,23 +78,20 @@ for station in json['stations']:
         index_label = find_index(value['value'], norms[key])
 
         sample = {
-            'time': value['ts'] * 1000000000,
-            'measurement': 'AIR_QUALITY',
-            'fields': {
-                'value': max(-1.0, 1.0 * value['value']),
-                'qindexNum': index_values[index_label]
-            },
+            'time': value['ts'],
+            'value': max(-1.0, 1.0 * value['value']),
+            'qindexnum': index_values[index_label],
+            'qindex': index_label,
+            'label': clean_text(cps[value['cp']]['long']),
+            'unit': clean_text(cps[value['cp']]['unit']),
             'tags': {
-                'plId': meta['plId'],
-                'euId': meta['euId'],
+#                'plId': meta['plId'],
+#                'euId': meta['euId'],
                 'station': meta['name'],
-                'type': clean_text(cps[value['cp']]['code']),
-                'label': clean_text(cps[value['cp']]['long']),
-                'unit': clean_text(cps[value['cp']]['unit']),
-                'qindex': index_label
+                'type': clean_text(cps[value['cp']]['code'])
             }
         }
         samples.append(sample)
         logger.debug(sample)
 
-db.write_points(samples)
+stats.write_points(table, samples)
