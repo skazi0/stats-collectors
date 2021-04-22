@@ -47,6 +47,8 @@ def fetch_forecast(url):
     if ':' in point['name']:
         date = datetime.strptime('%s %s' % (point['date'].split(', ')[-1], point['name']), '%d.%m.%Y %H:%M')
         sample = point_to_sample(point, date)
+        # hourly rain is in mm/h not mm/12h
+        sample['precip'] *= 12
         samples.append(sample)
         logger.debug(sample)
     # name = Wtorek -> daily data
