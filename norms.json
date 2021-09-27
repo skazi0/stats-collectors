@@ -69,7 +69,7 @@
             "desc": ""
         },
         {
-            "level": 200,
+            "level": 230,
             "label": "Dostateczny",
             "color": "#FF7E00",
             "desc": ""
@@ -95,25 +95,25 @@
             "desc": ""
         },
         {
-            "level": 30,
+            "level": 70,
             "label": "Bardzo dobry",
             "color": "#00B050",
             "desc": ""
         },
         {
-            "level": 70,
+            "level": 120,
             "label": "Dobry",
             "color": "#00E400",
             "desc": ""
         },
         {
-            "level": 120,
+            "level": 150,
             "label": "Umiarkowany",
             "color": "#FFFF00",
             "desc": ""
         },
         {
-            "level": 160,
+            "level": 180,
             "label": "Dostateczny",
             "color": "#FF7E00",
             "desc": ""
@@ -233,25 +233,25 @@
             "desc": ""
         },
         {
-            "level": 60,
+            "level": 50,
             "label": "Dobry",
             "color": "#00E400",
             "desc": ""
         },
         {
-            "level": 100,
+            "level": 80,
             "label": "Umiarkowany",
             "color": "#FFFF00",
             "desc": ""
         },
         {
-            "level": 140,
+            "level": 110,
             "label": "Dostateczny",
             "color": "#FF7E00",
             "desc": ""
         },
         {
-            "level": 200,
+            "level": 150,
             "label": "Z\u0142y",
             "color": "#FF0000",
             "desc": ""
@@ -271,31 +271,31 @@
             "desc": ""
         },
         {
-            "level": 12,
+            "level": 13,
             "label": "Bardzo dobry",
             "color": "#00B050",
             "desc": ""
         },
         {
-            "level": 36,
+            "level": 35,
             "label": "Dobry",
             "color": "#00E400",
             "desc": ""
         },
         {
-            "level": 60,
+            "level": 55,
             "label": "Umiarkowany",
             "color": "#FFFF00",
             "desc": ""
         },
         {
-            "level": 84,
+            "level": 75,
             "label": "Dostateczny",
             "color": "#FF7E00",
             "desc": ""
         },
         {
-            "level": 120,
+            "level": 110,
             "label": "Z\u0142y",
             "color": "#FF0000",
             "desc": ""

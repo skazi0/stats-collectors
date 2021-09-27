@@ -29,7 +29,7 @@ logging.basicConfig()
 logger = logging.getLogger('airq')
 #logger.setLevel(logging.DEBUG)
 
-# load norms from file (these are based on old API response)
+# load norms from file (these are based on legend from http://powietrze.gios.gov.pl/pjp/current)
 norms = {}
 with open(os.path.join(os.path.dirname(__file__), 'norms.json')) as f:
     norms = json.load(f)
@@ -57,7 +57,7 @@ def clean_text(text):
 
 def find_index(value, norm):
     for level in norm:
-        if value < level['level']:
+        if value <= level['level']:
             return level['label']
     return ''
 
