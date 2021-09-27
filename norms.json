@@ -1,0 +1,354 @@
+{
+    "so2": [
+        {
+            "level": -1,
+            "label": "Brak pomiaru",
+            "color": "#C6D6D5",
+            "desc": ""
+        },
+        {
+            "level": 50,
+            "label": "Bardzo dobry",
+            "color": "#00B050",
+            "desc": ""
+        },
+        {
+            "level": 100,
+            "label": "Dobry",
+            "color": "#00E400",
+            "desc": ""
+        },
+        {
+            "level": 200,
+            "label": "Umiarkowany",
+            "color": "#FFFF00",
+            "desc": ""
+        },
+        {
+            "level": 350,
+            "label": "Dostateczny",
+            "color": "#FF7E00",
+            "desc": ""
+        },
+        {
+            "level": 500,
+            "label": "Z\u0142y",
+            "color": "#FF0000",
+            "desc": ""
+        },
+        {
+            "level": 1000000000,
+            "label": "Bardzo z\u0142y",
+            "color": "#7E0023",
+            "desc": ""
+        }
+    ],
+    "no2": [
+        {
+            "level": -1,
+            "label": "Brak pomiaru",
+            "color": "#C6D6D5",
+            "desc": ""
+        },
+        {
+            "level": 40,
+            "label": "Bardzo dobry",
+            "color": "#00B050",
+            "desc": ""
+        },
+        {
+            "level": 100,
+            "label": "Dobry",
+            "color": "#00E400",
+            "desc": ""
+        },
+        {
+            "level": 150,
+            "label": "Umiarkowany",
+            "color": "#FFFF00",
+            "desc": ""
+        },
+        {
+            "level": 200,
+            "label": "Dostateczny",
+            "color": "#FF7E00",
+            "desc": ""
+        },
+        {
+            "level": 400,
+            "label": "Z\u0142y",
+            "color": "#FF0000",
+            "desc": ""
+        },
+        {
+            "level": 1000000000,
+            "label": "Bardzo z\u0142y",
+            "color": "#7E0023",
+            "desc": ""
+        }
+    ],
+    "o3": [
+        {
+            "level": -1,
+            "label": "Brak pomiaru",
+            "color": "#C6D6D5",
+            "desc": ""
+        },
+        {
+            "level": 30,
+            "label": "Bardzo dobry",
+            "color": "#00B050",
+            "desc": ""
+        },
+        {
+            "level": 70,
+            "label": "Dobry",
+            "color": "#00E400",
+            "desc": ""
+        },
+        {
+            "level": 120,
+            "label": "Umiarkowany",
+            "color": "#FFFF00",
+            "desc": ""
+        },
+        {
+            "level": 160,
+            "label": "Dostateczny",
+            "color": "#FF7E00",
+            "desc": ""
+        },
+        {
+            "level": 240,
+            "label": "Z\u0142y",
+            "color": "#FF0000",
+            "desc": ""
+        },
+        {
+            "level": 1000000000,
+            "label": "Bardzo z\u0142y",
+            "color": "#7E0023",
+            "desc": ""
+        }
+    ],
+    "co": [
+        {
+            "level": -1,
+            "label": "Brak pomiaru",
+            "color": "#C6D6D5",
+            "desc": ""
+        },
+        {
+            "level": 2499,
+            "label": "Bardzo dobry",
+            "color": "#00B050",
+            "desc": ""
+        },
+        {
+            "level": 6499,
+            "label": "Dobry",
+            "color": "#00E400",
+            "desc": ""
+        },
+        {
+            "level": 10499,
+            "label": "Umiarkowany",
+            "color": "#FFFF00",
+            "desc": ""
+        },
+        {
+            "level": 14449,
+            "label": "Dostateczny",
+            "color": "#FF7E00",
+            "desc": ""
+        },
+        {
+            "level": 20449,
+            "label": "Z\u0142y",
+            "color": "#FF0000",
+            "desc": ""
+        },
+        {
+            "level": 1000000000,
+            "label": "Bardzo z\u0142y",
+            "color": "#7E0023",
+            "desc": ""
+        }
+    ],
+    "c6h6": [
+        {
+            "level": -1,
+            "label": "Brak pomiaru",
+            "color": "#C6D6D5",
+            "desc": ""
+        },
+        {
+            "level": 5,
+            "label": "Bardzo dobry",
+            "color": "#00B050",
+            "desc": ""
+        },
+        {
+            "level": 10,
+            "label": "Dobry",
+            "color": "#00E400",
+            "desc": ""
+        },
+        {
+            "level": 15,
+            "label": "Umiarkowany",
+            "color": "#FFFF00",
+            "desc": ""
+        },
+        {
+            "level": 20,
+            "label": "Dostateczny",
+            "color": "#FF7E00",
+            "desc": ""
+        },
+        {
+            "level": 50,
+            "label": "Z\u0142y",
+            "color": "#FF0000",
+            "desc": ""
+        },
+        {
+            "level": 1000000000,
+            "label": "Bardzo z\u0142y",
+            "color": "#7E0023",
+            "desc": ""
+        }
+    ],
+    "pm10": [
+        {
+            "level": -1,
+            "label": "Brak pomiaru",
+            "color": "#C6D6D5",
+            "desc": ""
+        },
+        {
+            "level": 20,
+            "label": "Bardzo dobry",
+            "color": "#00B050",
+            "desc": ""
+        },
+        {
+            "level": 60,
+            "label": "Dobry",
+            "color": "#00E400",
+            "desc": ""
+        },
+        {
+            "level": 100,
+            "label": "Umiarkowany",
+            "color": "#FFFF00",
+            "desc": ""
+        },
+        {
+            "level": 140,
+            "label": "Dostateczny",
+            "color": "#FF7E00",
+            "desc": ""
+        },
+        {
+            "level": 200,
+            "label": "Z\u0142y",
+            "color": "#FF0000",
+            "desc": ""
+        },
+        {
+            "level": 1000000000,
+            "label": "Bardzo z\u0142y",
+            "color": "#7E0023",
+            "desc": ""
+        }
+    ],
+    "pm2.5": [
+        {
+            "level": -1,
+            "label": "Brak pomiaru",
+            "color": "#C6D6D5",
+            "desc": ""
+        },
+        {
+            "level": 12,
+            "label": "Bardzo dobry",
+            "color": "#00B050",
+            "desc": ""
+        },
+        {
+            "level": 36,
+            "label": "Dobry",
+            "color": "#00E400",
+            "desc": ""
+        },
+        {
+            "level": 60,
+            "label": "Umiarkowany",
+            "color": "#FFFF00",
+            "desc": ""
+        },
+        {
+            "level": 84,
+            "label": "Dostateczny",
+            "color": "#FF7E00",
+            "desc": ""
+        },
+        {
+            "level": 120,
+            "label": "Z\u0142y",
+            "color": "#FF0000",
+            "desc": ""
+        },
+        {
+            "level": 1000000000,
+            "label": "Bardzo z\u0142y",
+            "color": "#7E0023",
+            "desc": ""
+        }
+    ],
+    "__index__": [
+        {
+            "level": -1,
+            "label": "Brak pomiaru",
+            "color": "#C6D6D5",
+            "desc": ""
+        },
+        {
+            "level": 1,
+            "label": "Bardzo dobry",
+            "color": "#00B050",
+            "desc": ""
+        },
+        {
+            "level": 2,
+            "label": "Dobry",
+            "color": "#00E400",
+            "desc": ""
+        },
+        {
+            "level": 3,
+            "label": "Umiarkowany",
+            "color": "#FFFF00",
+            "desc": ""
+        },
+        {
+            "level": 4,
+            "label": "Dostateczny",
+            "color": "#FF7E00",
+            "desc": ""
+        },
+        {
+            "level": 5,
+            "label": "Z\u0142y",
+            "color": "#FF0000",
+            "desc": ""
+        },
+        {
+            "level": 1000000000,
+            "label": "Bardzo z\u0142y",
+            "color": "#7E0023",
+            "desc": ""
+        }
+    ]
+}
