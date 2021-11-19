@@ -63,7 +63,7 @@ def find_index(value, norm):
 
 samples = []
 for station in json:
-    if not station['stationName'].startswith(u'Wrocław'):
+    if not station['city']['name'] == 'Wrocław':
         continue
     stationID = station['id']
     try:
