@@ -23,4 +23,4 @@ def write_points(table, samples):
     for point in samples:
         r = requests.post(stats_url + '?table=' + table, json=point)
         if r.status_code != 200:
-            logger.error('error writing stats')
+            logger.error('error writing stats: %s', r.text)
