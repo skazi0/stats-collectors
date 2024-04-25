@@ -38,9 +38,10 @@ session = requests.session()
 
 try:
     r = session.get(url + 'station/findAll')
+    r.raise_for_status()
     json = r.json()
-except:
-    logger.error('error fetching stations list')
+except Exception as e:
+    logger.error('error fetching stations list %s' % e)
     sys.exit(1)
 
 #if json.get('error', False):
@@ -68,9 +69,10 @@ for station in json:
     stationID = station['id']
     try:
         r = session.get(url + 'station/sensors/%d' % stationID)
+        r.raise_for_status()
         sensors = r.json()
-    except:
-        logger.error('error fetching sensors for station ' + station['stationName'])
+    except Exception as e:
+        logger.error('error fetching sensors for station ' + station['stationName'] + e)
         continue
 
     for sensor in sensors:
@@ -81,9 +83,10 @@ for station in json:
 
         try:
             r = session.get(url + 'data/getData/%d' % sensor['id'])
+            r.raise_for_status()
             data = r.json()
-        except:
-            logger.error('error fetching data for sensor %d', sensor['id'])
+        except Exception as e:
+            logger.error('error fetching data for sensor %d %s', sensor['id'], e)
             continue
 
         # take max 2 last values
