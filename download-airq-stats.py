@@ -11,7 +11,7 @@ from datetime import datetime
 
 import stats
 
-url = 'http://api.gios.gov.pl/pjp-api/rest/'
+url = 'http://api.gios.gov.pl/pjp-api/v1/rest/'
 
 table = 'air_quality'
 
@@ -37,9 +37,10 @@ with open(os.path.join(os.path.dirname(__file__), 'norms.json')) as f:
 session = requests.session()
 
 try:
-    r = session.get(url + 'station/findAll')
+    r = session.get(url + 'station/findAll', params={'size': 400})
     r.raise_for_status()
     json = r.json()
+    json = json['Lista stacji pomiarowych']
 except Exception as e:
     logger.error('error fetching stations list %s' % e)
     sys.exit(1)
@@ -64,49 +65,56 @@ def find_index(value, norm):
 
 samples = []
 for station in json:
-    if not station['city']['name'] == 'Wrocław':
+    if not station['Nazwa miasta'] == 'Wrocław':
         continue
-    stationID = station['id']
+    stationID = station['Identyfikator stacji']
     try:
         r = session.get(url + 'station/sensors/%d' % stationID)
         r.raise_for_status()
         sensors = r.json()
     except Exception as e:
-        logger.error('error fetching sensors for station ' + station['stationName'] + e)
+        logger.error('error fetching sensors for station ' + station['Nazwa stacji'] + ' ' + str(e))
         continue
 
+    sensors = sensors['Lista stanowisk pomiarowych dla podanej stacji']
     for sensor in sensors:
-        key = sensor['param']['paramCode'].lower()
+        key = sensor['Wskaźnik - kod'].lower()
+        if key not in norms:
+            logger.debug('norms for key "%s" not found' % key)
+            continue
 #        logger.debug(key)
 #        logger.debug(norms[key])
 #        logger.debug(find_index(value['value'], norms[key]))
 
         try:
-            r = session.get(url + 'data/getData/%d' % sensor['id'])
-            r.raise_for_status()
+            r = session.get(url + 'data/getData/%d' % sensor['Identyfikator stanowiska'])
             data = r.json()
+            r.raise_for_status()
         except Exception as e:
-            logger.error('error fetching data for sensor %d %s', sensor['id'], e)
+            # skip manual sensors
+            if 'manual' not in data['error_reason']:
+                logger.error('error fetching data for sensor %d %s %s', sensor['Identyfikator stanowiska'], e, data)
             continue
 
+        data = data['Lista danych pomiarowych']
         # take max 2 last values
-        for v in data['values'][:2]:
-            if v['value'] is None:
+        for v in data[:2]:
+            if v['Wartość'] is None:
                 continue
-            index_label = find_index(v['value'], norms[key])
-            ts = datetime.strptime(v['date'], '%Y-%m-%d %H:%M:%S').timestamp()
+            index_label = find_index(v['Wartość'], norms[key])
+            ts = datetime.strptime(v['Data'], '%Y-%m-%d %H:%M:%S').timestamp()
             sample = {
                 'time': int(ts),
-                'value': max(-1, v['value']),
+                'value': max(-1, v['Wartość']),
                 'qindexnum': index_values[index_label],
                 'qindex': index_label,
-                'label': sensor['param']['paramName'],
+                'label': sensor['Wskaźnik'],
 #                'unit': clean_text(cps[value['cp']]['unit']),
                 'tags': {
 #                    'plId': meta['plId'],
 #                    'euId': meta['euId'],
-                    'station': station['stationName'],
-                    'type': sensor['param']['paramCode'],
+                    'station': station['Nazwa stacji'],
+                    'type': sensor['Wskaźnik - kod'],
                 }
             }
             samples.append(sample)
