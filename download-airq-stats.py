@@ -23,6 +23,7 @@ index_values = {
     u'Zły': 2.0,
     u'Bardzo zły': 1.0,
     u'Brak indeksu': 0.0,
+    u'Brak pomiaru': 0.0,
 }
 
 logging.basicConfig()
