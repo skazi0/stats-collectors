@@ -37,14 +37,17 @@ with open(os.path.join(os.path.dirname(__file__), 'norms.json')) as f:
 
 session = requests.session()
 
-try:
-    r = session.get(url + 'station/findAll', params={'size': 400})
-    r.raise_for_status()
-    json = r.json()
-    json = json['Lista stacji pomiarowych']
-except Exception as e:
-    logger.error('error fetching stations list %s' % e)
-    sys.exit(1)
+@stats.cache('airqStations', 3600 * 24)
+def stations_list():
+    try:
+        r = session.get(url + 'station/findAll', params={'size': 400})
+        r.raise_for_status()
+        data = r.json()
+        data = data['Lista stacji pomiarowych']
+        return data
+    except Exception as e:
+        logger.error('error fetching stations list %s' % e)
+        sys.exit(1)
 
 #if json.get('error', False):
 #    logger.error('error returned from server: %s' % json['msg'])
@@ -64,8 +67,9 @@ def find_index(value, norm):
             return level['label']
     return ''
 
+stations = stations_list()
 samples = []
-for station in json:
+for station in stations:
     if not station['Nazwa miasta'] == 'Wrocław':
         continue
     stationID = station['Identyfikator stacji']

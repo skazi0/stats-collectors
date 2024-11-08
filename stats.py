@@ -1,6 +1,8 @@
 import os
 import logging
 import requests
+import time
+import pickle
 
 stats_url = 'http://localhost/stats.php'
 
@@ -24,3 +26,24 @@ def write_points(table, samples):
         r = requests.post(stats_url + '?table=' + table, json=point)
         if r.status_code != 200:
             logger.error('error writing stats: %s', r.text)
+
+def cache(name, timeout):
+    cache_file = os.path.join(os.environ.get('TMP', '/tmp'), '%s.cache' % name)
+    def cache_wrapper(func):
+        def wrapper(*args, **kwargs):
+            try:
+                mtime = os.path.getmtime(cache_file)
+            except OSError as e:
+                mtime = 0
+            # update cache
+            if mtime < time.time() - timeout:
+                ret = func(*args, **kwargs)
+                with open(cache_file, 'wb') as f:
+                    pickle.dump(ret, f)
+                return ret
+            # return from cache
+            else:
+                with open(cache_file, 'rb') as f:
+                    return pickle.load(f)
+        return wrapper
+    return cache_wrapper
