@@ -37,7 +37,7 @@ with open(os.path.join(os.path.dirname(__file__), 'norms.json')) as f:
 
 session = requests.session()
 
-@stats.cache('airqStations', 3600 * 24)
+@stats.cache('airqStations', 3600 * 24 * 7)
 def stations_list():
     try:
         r = session.get(url + 'station/findAll', params={'size': 400})
