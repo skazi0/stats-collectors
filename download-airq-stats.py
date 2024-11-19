@@ -43,6 +43,7 @@ def stations_list():
         r = session.get(url + 'station/findAll', params={'size': 400})
         # keep cache if too many requests
         if r.status_code == 429:
+            logger.warning('error fetching stations list (keep cache) %s' % r.text)
             return None
         r.raise_for_status()
         data = r.json()
