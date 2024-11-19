@@ -37,10 +37,13 @@ with open(os.path.join(os.path.dirname(__file__), 'norms.json')) as f:
 
 session = requests.session()
 
-@stats.cache('airqStations', 3600 * 24 * 7)
+@stats.cache('airqStations', 3600 * 24 * 7, True)
 def stations_list():
     try:
         r = session.get(url + 'station/findAll', params={'size': 400})
+        # keep cache if too many requests
+        if r.status_code == 429:
+            return None
         r.raise_for_status()
         data = r.json()
         data = data['Lista stacji pomiarowych']

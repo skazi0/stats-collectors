@@ -27,7 +27,7 @@ def write_points(table, samples):
         if r.status_code != 200:
             logger.error('error writing stats: %s', r.text)
 
-def cache(name, timeout):
+def cache(name, timeout, keepCacheOnNone=False):
     cache_file = os.path.join(os.environ.get('TMP', '/tmp'), '%s.cache' % name)
     def cache_wrapper(func):
         def wrapper(*args, **kwargs):
@@ -38,12 +38,14 @@ def cache(name, timeout):
             # update cache
             if mtime < time.time() - timeout:
                 ret = func(*args, **kwargs)
-                with open(cache_file, 'wb') as f:
-                    pickle.dump(ret, f)
-                return ret
+                if ret is not None:
+                    with open(cache_file, 'wb') as f:
+                        pickle.dump(ret, f)
+                    return ret
+                elif not keepCacheOnNone:
+                    return ret
             # return from cache
-            else:
-                with open(cache_file, 'rb') as f:
-                    return pickle.load(f)
+            with open(cache_file, 'rb') as f:
+                return pickle.load(f)
         return wrapper
     return cache_wrapper
